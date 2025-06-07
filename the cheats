@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GTA Story Mode Modding Hub</title>
+  <style>
+    /* Reset & base */
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: #eee;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a {
+      color: #1db954;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      background: #1c1c1c;
+      padding: 20px 40px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+    header h1 {
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      margin-right: 20px;
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+
+    main {
+      flex: 1;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    section {
+      margin-bottom: 60px;
+    }
+    section h2 {
+      font-size: 2em;
+      margin-bottom: 15px;
+      border-bottom: 3px solid #1db954;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    .btn-download {
+      display: inline-block;
+      background: #1db954;
+      color: #121212;
+      padding: 12px 25px;
+      font-weight: 700;
+      border-radius: 6px;
+      box-shadow: 0 4px 8px rgba(29,185,84,0.5);
+      transition: background 0.3s ease;
+      margin-top: 15px;
+    }
+    .btn-download:hover {
+      background: #17a443;
+      box-shadow: 0 6px 12px rgba(23,164,67,0.7);
+    }
+
+    footer {
+      background: #1c1c1c;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 0.9em;
+      color: #aaa;
+      box-shadow: 0 -2px 4px rgba(0,0,0,0.8);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header, main {
+        padding: 20px;
+      }
+      nav a {
+        display: block;
+        margin: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>GTA Story Mode Modding Hub</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#download">Download</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="about">
+      <h2>About</h2>
+      <p>Welcome to the ultimate GTA V Story Mode modding hub. Here you will find powerful tools, guides, and downloads to enhance your single-player experience with mods like infinite money, godmode, teleportation, and more.</p>
+    </section>
+
+    <section id="features">
+      <h2>Features</h2>
+      <ul>
+        <li>Attach mod menu to GTA V process easily</li>
+        <li>Toggle infinite money & godmode</li>
+        <li>Spawn weapons instantly</li>
+        <li>Teleport to predefined locations</li>
+        <li>Cleanup nearby entities with one click</li>
+        <li>Simple, clean UI designed for modders</li>
+      </ul>
+    </section>
+
+    <section id="download">
+      <h2>Download</h2>
+      <p>Get the latest GTA V Story Mode Mod Menu here:</p>
+      <a href="path-to-your-gtav-modmenu.zip" class="btn-download" download>Download Mod Menu (ZIP)</a>
+      <p><small>Instructions included in the ZIP file.</small></p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Questions, feedback or modding requests? Reach out to me:</p>
+      <ul>
+        <li>Email: <a href="mailto:your.email@example.com">your.email@example.com</a></li>
+        <li>Twitter: <a href="https://twitter.com/yourhandle" target="_blank">@yourhandle</a></li>
+        <li>Discord: YourDiscord#1234</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 GTA Story Mode Modding Hub. All rights reserved.
+  </footer>
+
+</body>
+</html>
