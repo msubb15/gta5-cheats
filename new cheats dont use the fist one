@@ -1,0 +1,127 @@
+import threading
+import tkinter as tk
+import time
+import logging
+
+try:
+    import pymem
+    import pymem.process
+except ImportError:
+    pymem = None  # Handle missing pymem gracefully
+
+TARGET_PROCESS = "GTA5.exe"
+
+logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
+
+
+class GTAVModMenu:
+    def __init__(self):
+        self.pm = None
+        self.base_address = None
+        self.money_address = None
+        self.health_address = None
+        self.attached = False
+
+        self.money_flag = threading.Event()
+        self.godmode_flag = threading.Event()
+
+        self.money_status_label = None
+        self.godmode_status_label = None
+
+    def scan_for_offsets(self):
+        logging.info("Scanning for memory patterns... (stub)")
+        # Stub addresses — replace with actual offsets if known
+        self.money_address = self.base_address + 0x01FCE8B0
+        self.health_address = self.base_address + 0x01FC9AB8
+
+    def attach(self):
+        if pymem is None:
+            logging.error("pymem is not installed. Install it with 'pip install pymem'")
+            return
+
+        try:
+            self.pm = pymem.Pymem(TARGET_PROCESS)
+            self.base_address = pymem.process.module_from_name(self.pm.process_handle, TARGET_PROCESS).lpBaseOfDll
+            self.scan_for_offsets()
+            self.attached = True
+            logging.info("Attached to GTA5.exe")
+        except Exception as e:
+            logging.error(f"Attach failed: {e}")
+
+    def toggle_money(self):
+        if not self.attached:
+            logging.warning("Not attached to process.")
+            return
+        if self.money_flag.is_set():
+            self.money_flag.clear()
+            self.money_status_label.config(text="Money: OFF")
+        else:
+            self.money_flag.set()
+            self.money_status_label.config(text="Money: ON")
+            threading.Thread(target=self.infinite_money_loop, daemon=True).start()
+
+    def infinite_money_loop(self):
+        while self.money_flag.is_set():
+            try:
+                self.pm.write_int(self.money_address, 999999999)
+            except Exception as e:
+                logging.warning(f"Money write failed: {e}")
+            time.sleep(1)
+
+    def toggle_godmode(self):
+        if not self.attached:
+            logging.warning("Not attached to process.")
+            return
+        if self.godmode_flag.is_set():
+            self.godmode_flag.clear()
+            self.godmode_status_label.config(text="Godmode: OFF")
+        else:
+            self.godmode_flag.set()
+            self.godmode_status_label.config(text="Godmode: ON")
+            threading.Thread(target=self.godmode_loop, daemon=True).start()
+
+    def godmode_loop(self):
+        while self.godmode_flag.is_set():
+            try:
+                self.pm.write_float(self.health_address, 9999.0)
+            except Exception as e:
+                logging.warning(f"Health write failed: {e}")
+            time.sleep(0.5)
+
+    def spawn_weapon(self, weapon_id=0x5EF9FEC4):
+        logging.info(f"Spawning weapon ID {weapon_id} (TODO: Implement actual logic)")
+
+    def set_wanted_level(self, level=0):
+        logging.info(f"Setting wanted level to {level} (TODO: Implement actual logic)")
+
+    def cleanup_entities(self):
+        logging.info("Cleaning up nearby entities (TODO: Implement actual logic)")
+
+    def teleport_player(self, x, y, z):
+        logging.info(f"Teleporting player to {x}, {y}, {z} (TODO: Implement actual logic)")
+
+    def build_ui(self):
+        root = tk.Tk()
+        root.title("GTA V Story Mode Mod Menu")
+        root.geometry("400x400")
+
+        tk.Button(root, text="Attach to GTA V", command=self.attach).pack(pady=5)
+        tk.Button(root, text="Infinite Money", command=self.toggle_money).pack(pady=5)
+        self.money_status_label = tk.Label(root, text="Money: OFF")
+        self.money_status_label.pack()
+
+        tk.Button(root, text="Godmode", command=self.toggle_godmode).pack(pady=5)
+        self.godmode_status_label = tk.Label(root, text="Godmode: OFF")
+        self.godmode_status_label.pack()
+
+        tk.Button(root, text="Spawn Weapon (Pistol)", command=lambda: self.spawn_weapon(0x5EF9FEC4)).pack(pady=5)
+        tk.Button(root, text="Set Wanted Level 0", command=lambda: self.set_wanted_level(0)).pack(pady=5)
+        tk.Button(root, text="Teleport to Safehouse", command=lambda: self.teleport_player(-14.5, -1432.3, 31.1)).pack(pady=5)
+        tk.Button(root, text="Cleanup Entities", command=self.cleanup_entities).pack(pady=5)
+
+        root.mainloop()
+
+
+if __name__ == "__main__":
+    modmenu = GTAVModMenu()
+    modmenu.build_ui()
